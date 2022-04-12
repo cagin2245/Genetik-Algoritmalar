@@ -29,6 +29,7 @@ def sinir_kontrol(nokta,sinirlar):
 
 def tepeTirmanma(objective,sinirlar,iterasyon_siniri,delta):
     cozum = None
+    cozumler = []
     while cozum is None or not sinir_kontrol(cozum,sinirlar):
         cozum = sinirlar[:,0] + rand(len(sinirlar)) * (sinirlar[:,1] - sinirlar[:,0])
     mevcut_cozum = objective(cozum)
@@ -40,17 +41,22 @@ def tepeTirmanma(objective,sinirlar,iterasyon_siniri,delta):
         aday_cozumu_ata = objective(aday_cozum)
         if aday_cozumu_ata >= mevcut_cozum:
             cozum, mevcut_cozum = aday_cozum,aday_cozumu_ata
+            cozumler.append(mevcut_cozum)
             print('>%d f(%s) = %.5f' % (i,cozum,mevcut_cozum))
-    return [cozum,mevcut_cozum]
+
+
+    return [cozum,mevcut_cozum,cozumler]
 
 #pseudorandom sayı oluşturucu seed'i
 seed(1)
 sinirlar = asarray([[0.0,10.0],[0.0,10.0]])
 iterasyon_siniri = 1000
 delta = 0.1
-eniyi, skor = tepeTirmanma(objective,sinirlar,iterasyon_siniri,delta)
+eniyi, skor, cozumler = tepeTirmanma(objective,sinirlar,iterasyon_siniri,delta)
 print('Done!')
 print('f(%s) = %f' % (eniyi,skor))
+print('\n bulunan cozumler {}'.format(cozumler))
+
 
 #Amaç fonksiyonun 3 boyutlu grafiğini yazdırma
 
@@ -63,7 +69,7 @@ axis = figure.gca(projection = '3d')
 axis.plot_surface(x,y,results,cmap='jet')
 pyplot.show()
 
-# """"
+#
 
 # Tanım aralığında rasthele bir nokta oluşturma
 
