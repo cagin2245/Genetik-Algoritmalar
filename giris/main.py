@@ -30,6 +30,7 @@ def sinir_kontrol(nokta,sinirlar):
 def tepeTirmanma(objective,sinirlar,iterasyon_siniri,delta):
     cozum = None
     cozumler = []
+    girdiler = []
     while cozum is None or not sinir_kontrol(cozum,sinirlar):
         cozum = sinirlar[:,0] + rand(len(sinirlar)) * (sinirlar[:,1] - sinirlar[:,0])
     mevcut_cozum = objective(cozum)
@@ -41,21 +42,33 @@ def tepeTirmanma(objective,sinirlar,iterasyon_siniri,delta):
         aday_cozumu_ata = objective(aday_cozum)
         if aday_cozumu_ata >= mevcut_cozum:
             cozum, mevcut_cozum = aday_cozum,aday_cozumu_ata
+            girdiler.append(aday_cozum)
             cozumler.append(mevcut_cozum)
             print('>%d f(%s) = %.5f' % (i,cozum,mevcut_cozum))
 
 
-    return [cozum,mevcut_cozum,cozumler]
+    return [cozum,mevcut_cozum,cozumler,girdiler]
 
 #pseudorandom sayı oluşturucu seed'i
 seed(1)
 sinirlar = asarray([[0.0,10.0],[0.0,10.0]])
 iterasyon_siniri = 1000
 delta = 0.1
-eniyi, skor, cozumler = tepeTirmanma(objective,sinirlar,iterasyon_siniri,delta)
+eniyi, skor, cozumler,girdiler = tepeTirmanma(objective,sinirlar,iterasyon_siniri,delta)
 print('Done!')
 print('f(%s) = %f' % (eniyi,skor))
-print('\n bulunan cozumler {}'.format(cozumler))
+print('\nBulunan cozumler {}'.format(cozumler))
+print('\nGirdiler ve bulunan amaç fonksiyonu değerleri: \n')
+i = 0
+for element in girdiler:
+
+    for nested_tem in element:
+        print(nested_tem , end=" ")
+    print(cozumler[i])
+    print(cozumler[i-1]-cozumler[i])
+    i=i+1
+
+    print()
 
 
 #Amaç fonksiyonun 3 boyutlu grafiğini yazdırma
