@@ -15,9 +15,9 @@ from matplotlib import pyplot
 from mpl_toolkits.mplot3d import Axes3D
 import math
 
-def objective_draw(x,y):
+def amac_ciz(x,y):
     return sin(x) + tan(y) + pow(1.25,x+y)
-def objective(v):
+def amac_fonksiyonu(v):
        x,y = v
        return  sin(x) + tan(y) + pow(1.25,x+y)
 
@@ -76,7 +76,7 @@ for element in girdiler:
 x_ = arange(0.0,10.0,delta)
 y_ = arange(0.0,10.0,delta)
 x,y = meshgrid(x_,y_)
-results = objective_draw(x,y)
+results = amac_ciz(x,y)
 figure = pyplot.figure()
 axis = figure.gca(projection = '3d')
 axis.plot_surface(x,y,results,cmap='jet')
