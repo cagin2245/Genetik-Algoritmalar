@@ -54,7 +54,7 @@ seed(1)
 sinirlar = asarray([[0.0,10.0],[0.0,10.0]])
 iterasyon_siniri = 1000
 delta = 0.1
-eniyi, skor, cozumler,girdiler = tepeTirmanma(objective,sinirlar,iterasyon_siniri,delta)
+eniyi, skor, cozumler,girdiler = tepeTirmanma(amac_fonksiyonu,sinirlar,iterasyon_siniri,delta)
 print('Done!')
 print('f(%s) = %f' % (eniyi,skor))
 print('\nBulunan cozumler {}'.format(cozumler))
